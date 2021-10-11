@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>8</LangVersion>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MvvmCross" Version="8.0.2" />
+      <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+      <PackageReference Include="ReactiveUI" Version="16.2.6" />
+    </ItemGroup>
+
+</Project>
