@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace NPCDemoBug1
 {
@@ -6,7 +7,6 @@ namespace NPCDemoBug1
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Program Started");
             var _ = new ViewModelA(new TestService());
             while (true)
             {

@@ -1,15 +1,13 @@
 using System;
-using System.Reactive.Linq;
 using MvvmCross.ViewModels;
 using PropertyChanged;
-using ReactiveUI;
 
 namespace NPCDemoBug1
 {
     public class ViewModelA : MvxNotifyPropertyChanged
     {
         public bool IsConnected => _service.IsConnected;
-        
+
         [DependsOn(nameof(IsConnected))]
         public string IsConnectedMessage => IsConnected ? "Is Connected" : "Is NOT Connected";
 
@@ -19,14 +17,29 @@ namespace NPCDemoBug1
         {
             _service = service;
             
-            // this was my clever way of a "DependsOn" that links to another object.
-            // But apparently this causes issues with the DependsOn attribute
-            _service.ObservableForProperty(x => x.IsConnected)
-                .ToPropertyChanged(this, x => x.IsConnected);
+            _service.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "IsConnected")
+                {
+                    RaisePropertyChanged(nameof(IsConnected));
+                }
+            };
 
-            PropertyChanged += (sender, args) => { Console.WriteLine($"property changed: {args.PropertyName}"); };
-
-            this.WhenAnyValue(x => x.IsConnectedMessage).Subscribe(Console.WriteLine);
+            PropertyChanged += (sender, args) =>
+            {
+                Console.WriteLine($"VM Property changed: {args.PropertyName}");
+                
+                switch (args.PropertyName)
+                {
+                    case nameof(IsConnected):
+                        Console.WriteLine(IsConnected);
+                        break;
+                    case nameof(IsConnectedMessage):
+                        Console.WriteLine(IsConnectedMessage);
+                        break;
+                }
+                Console.WriteLine("");
+            };
         }
     }
 }

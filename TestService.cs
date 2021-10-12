@@ -12,7 +12,7 @@ namespace NPCDemoBug1
         {
             Observable.Interval(TimeSpan.FromSeconds(0.5)).Subscribe(x =>
             {
-                IsConnected = x % 2 == 0;
+                IsConnected = !IsConnected;
             });
         }
     }
